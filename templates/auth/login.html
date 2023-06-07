@@ -1,0 +1,56 @@
+{% extends 'auth.html' %}
+
+
+{% block content %}
+<!-- <div>
+    <div class="section-description d-flex align-items-center justify-content-center">
+        <i class="material-icons me-3">
+            key
+        </i> 
+    <h1>Login</h1>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        
+        {{ form.as_p }}
+       
+        <div class="d-grid">
+            <input class="btn btn-primary" type="submit" value="Login">
+        </div>
+    </form>
+</div> -->
+<div class="app-auth-container">
+    
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger alert-style-light" role="alert">
+        <p>{{ form.non_field_errors }}</p>
+    </div>
+    {% endif %}
+        
+    <div class="logo">
+        <a href="">Neptune</a>
+    </div>
+    <p class="auth-description">Please sign-in to your account and continue to the dashboard.</p>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="auth-credentials m-b-xxl">
+            <label for="signInEmail" class="form-label">Email address</label>
+            <input type="text" class="form-control m-b-md" name="username"  placeholder="example@fiflo.com">
+    
+            <label for="signInPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" name="password"  placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+        </div>
+    
+        <div class="auth-submit">
+            <button type="submit" href="#" class="btn btn-primary">Sign In</button>
+            <a href="#" class="auth-forgot-password float-end">Forgot password?</a>
+        </div>
+    </form>
+    <div class="divider"></div>
+    <div class="auth-alts">
+        <a href="#" class="auth-alts-google"></a>
+        <a href="#" class="auth-alts-facebook"></a>
+        <a href="#" class="auth-alts-twitter"></a>
+    </div>
+</div>
+{% endblock content %}
