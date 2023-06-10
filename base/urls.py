@@ -25,6 +25,7 @@ urlpatterns = [
     path('upload-file/', views.upload_file, name='upload-file'),
     path('download-file/<int:file_id>/', views.download_file, name='download-file'),
     path('delete-file/<int:file_id>/', views.delete_file, name='delete-file'),
+    path('approve-file/<int:file_id>/', views.approve_file, name='approve-file'),
     path('file/<int:file_id>/', views.file, name='file'),
     path('file-remove-group/<int:file_id>/<int:group_id>/', views.file_remove_group, name='file-remove-group'),
 ]

@@ -29,18 +29,29 @@
                             <ul class="list-unstyled todo-status-filter">
                                 <li><a href="#"><i class="material-icons-outlined text-danger">calendar_month</i>Created on {{ file.created_at|date:"d M, Y" }}</a></li>
                                 <li><a href="#"><i class="material-icons-outlined text-success">folder_copy</i>{{ groups.count }} Groups shared</a></li>
+                                {% if file.approved_status == 1 %}
+                                <li><a href="#"><i class="material-icons-outlined text-success">done</i>Status: <span class="badge badge-success">Approved</span></a></li>
+                                {% else %}
+                                <li><a href="#"><i class="material-icons-outlined text-danger">close</i>Status: <span class="badge badge-warning">Not Approved</span></a></li>
+                                {% endif %}
                             </ul>
                             
                             <h5 class="todo-menu-title">file actions</h5>
                             <ul class="list-unstyled todo-status-filter">
                                 <li>
-                                    <a href="" class="btn btn-success">Approve</a>
+                                    
+                                    {% if file.approved_status == 1 %}
+                                    <a href="{% url 'approve-file' file.id %}" class="btn btn-warning">Disapprove?</a>
+                                    {% else %}
+                                    <a href="{% url 'approve-file' file.id %}" class="btn btn-success">Approve</a>
+                                    {% endif %}
+                                        
                                 </li>
                                 <li>
-                                    <a href="" class="btn btn-primary">Download</a>
+                                    <a href="{% url 'download-file' file.id %}" class="btn btn-primary">Download</a>
                                 </li>
                                 <li>
-                                    <a href="" class="btn btn-danger">Delete</a>
+                                    <a href="{% url 'delete-file' file.id %}" class="btn btn-danger">Delete</a>
                                 </li>
                             </ul>
                             
@@ -64,41 +75,50 @@
                     </div>
                     <div class="col-xl-8 col-xxl-9">
                         <div class="todo-list">
-<div class="row">
-    <div class="col">
-        <div class="card widget widget-chat">
-            <div class="card-header">
-                <!-- can be widget-chat-inactive-user for red dot -->
-                <h5 class="card-title widget-chat-active-user">Comments</h5>
-            </div>
-<div class="widget-chat-messages-container">
- {% for comment in comments %}
- <div class="widget-chat-message-item">
-    <div class="widget-chat-message-item-content">
-        David Kawogo
-        <div class="widget-chat-message-item-text">
-            {{ comment.comment }}
-        </div>
-    </div>
-</div>
-<!-- <div class="widget-chat-message-item own">
-    <div class="widget-chat-message-item-content">
-        Lightness Mamuya
-        <div class="widget-chat-message-item-text">
-            I will take my dog with me
-        </div>
-    </div>
-</div> -->
- {% endfor %}
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card widget widget-chat">
+                                        <div class="card-header">
+                                            <!-- can be widget-chat-inactive-user for red dot -->
+                                            <h5 class="card-title widget-chat-active-user">Comments</h5>
+                                        </div>
+                                                <div class="widget-chat-messages-container">
+                                                {% for comment in comments %}
+                                                {% if request.user == comment.user %}
+                                                <div class="widget-chat-message-item own">
+                                                    <div class="widget-chat-message-item-content">
+                                                    <span><i>@<strong>{{ comment.user.username }}</strong></i></span>
+                                                    <div class="widget-chat-message-item-text">
+                                                        {{ comment.comment }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% else %}
+                                                <div class="widget-chat-message-item">
+                                                    <div class="widget-chat-message-item-content">
+                                                    <span><i>@<strong>{{ comment.user.username }}</strong></i></span>
+                                                    <div class="widget-chat-message-item-text">
+                                                        {{ comment.comment }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
     
-            </div>
-            <div class="widget-chat-compose">
-                <input class="widget-chat-compose-input" type="text" placeholder="Type..">
-                <button class="widget-chat-compose-send-btn"><i class="material-icons">arrow_forward_ios</i></button>
-            </div>
-        </div>
-    </div>
-</div>
+                                        </div>
+                                        <form action="" method="post">
+                                            {% csrf_token %}
+                                        <div class="widget-chat-compose">
+                                            <div class="col">
+                                                {{ commentForm.as_p }}
+                                                 
+                                            </div>
+                                                <button class="widget-chat-compose-send-btn"><i class="material-icons">arrow_forward_ios</i></button>
+                                                </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

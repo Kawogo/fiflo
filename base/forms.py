@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import UserGroup,Category,File
+from .models import UserGroup,Category,File,Comment
 
 
 class UserGroupForm(forms.ModelForm):
@@ -32,6 +32,9 @@ class CategoryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CategoryForm, self).__init__(*args, **kwargs)
         self.fields['category_name'].widget.attrs['class'] = 'form-control'
+   
+   
+   
         
 class UploadFileForm(forms.ModelForm):
     """Form definition for UploadFile."""
@@ -48,6 +51,21 @@ class UploadFileForm(forms.ModelForm):
         self.fields['category'].widget.attrs['class'] = 'form-control'
         self.fields['description'].widget.attrs['class'] = 'form-control'
         self.fields['group'].widget.attrs['class'] = 'form-control'
+        
+class CommentForm(forms.ModelForm):
+    """Form definition for Comment."""
+
+    class Meta:
+        """Meta definition for Commentform."""
+
+        model = Comment
+        fields = ['comment']
+    
+    def __init__(self, *args, **kwargs):
+        super(CommentForm, self).__init__(*args, **kwargs)
+        self.fields['comment'].label = ""
+        self.fields['comment'].widget.attrs['class'] = 'widget-chat-compose-input form-control flex-fill'
+        self.fields['comment'].widget.attrs['placeholder'] = 'Type comment here...'
         
 
 

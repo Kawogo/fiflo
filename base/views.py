@@ -6,6 +6,7 @@ from .forms import *
 from django.contrib import messages
 from django.db.models import Q
 from django.http import HttpResponse
+import datetime
 
 
 # Create your views here.
@@ -152,12 +153,25 @@ def download_file(request, file_id):
     response['Content-Disposition'] = f'attachment; filename="{file.filename()}"'
     return response
 
+
+
 def file(request,file_id):
     file = File.objects.get(id=file_id)
     groups = file.group.all()
+    form = CommentForm()
     comments = file.comments.all()
-    context = {'file':file,'groups':groups, 'comments': comments}
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.save()
+            file.comments.add(comment)
+            return redirect('file', file_id = file_id)
+    context = {'file':file,'groups':groups, 'comments': comments,'commentForm': form}
     return render(request, 'file/file.html', context)
+
+
 
 def file_remove_group(request,file_id,group_id):
     file = File.objects.get(id=file_id)
@@ -169,6 +183,7 @@ def file_remove_group(request,file_id,group_id):
     context = {'file':file,'group':group}
     return render(request, 'file/remove_group.html', context)
 
+
 def delete_file(request,file_id):
     file = File.objects.get(id=file_id)
     if request.method == 'POST':
@@ -177,3 +192,16 @@ def delete_file(request,file_id):
         return redirect('files')
     context = {'file':file}
     return render(request, 'file/delete.html', context)
+
+
+def approve_file(request,file_id):
+    file = File.objects.get(id = file_id)
+    context = {'file':file}
+    if request.method == 'POST':
+        file.approved_status = 1 if file.approved_status == 0 else 0
+        file.approved_by = request.user
+        file.approved_on = datetime.datetime.now()
+        file.save()
+        messages.success(request, 'File status has been updated successfully.')
+        return redirect('file', file_id = file_id)
+    return render(request, 'file/approve.html', context)
