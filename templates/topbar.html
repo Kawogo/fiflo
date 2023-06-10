@@ -29,10 +29,10 @@
 <div class="app-menu">
     <div class="container">
         <ul class="menu-list">
-            <li>
+            <li class="active-page">
                 <a href="{% url 'home' %}">Dashboard</a>
             </li>
-            <li class="active-page">
+            <li>
                 <a href="#">Apps<i class="material-icons has-sub-menu">keyboard_arrow_down</i></a>
                 <ul class="sub-menu">
                     <li>
@@ -50,7 +50,13 @@
                 <a href="{% url 'users' %}">User management</a>
             </li>
             <li>
-                <a href="{% url 'add-file' %}">Add file</a>
+                <a href="{% url 'user-group' %}">Groups</a>
+            </li>
+            <li>
+                <a href="{% url 'categories' %}">Categories</a>
+            </li>
+            <li>
+                <a href="{% url 'files' %}">Files</a>
             </li>
         </ul>
     </div>

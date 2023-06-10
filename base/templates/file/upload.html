@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<div class="mt-3">
+    <div class="section-description d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center">
+    <i class="material-icons-outlined me-3">
+        backup
+    </i> 
+<h1>Upload new file</h1>
+</div>
+<a href="javascript:history.go(-1)" class="d-flex align-items-center text-decoration-none">
+    <i class="material-icons text-primary me-2">
+        keyboard_backspace
+    </i>
+    Back
+</a>
+    </div>
+<div class="">
+<div class="card d-flex justify-content-center">
+    <div class="card-body">
+        {% if form.subject.errors %}
+        <ol>
+        {% for error in form.subject.errors %}
+            <li><strong>{{ error|escape }}</strong></li>
+        {% endfor %}
+        </ol>
+        {% endif %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+           
+            <input class="btn btn-primary" type="submit" value="Upload">
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+{% endblock content %}
+    

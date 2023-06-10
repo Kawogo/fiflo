@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="mt-3">
+<div class="section-description d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center">
+    <i class="material-icons me-3">
+        people_outline
+    </i> 
+    <h1>User Groups</h1>
+</div>
+<a href="{% url 'create-user-group' %}" class="btn btn-primary"><i class="material-icons">add</i>Add group</a>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div class="col-md-8 float-end d-flex justify-content-between">
+                        <form action="{% url 'user-group' %}" method="get" class="row row-cols-lg-auto g-2 align-items-center">
+                            <div class="col-12">
+                                <input type="text" name="group-name-search" id="" placeholder="Search group by name....." class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    {% for group in groups  %}
+                    <div class="col-xl-4">
+                        <div class="card file-manager-group">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <i class="material-icons text-warning">people_outline</i>
+                                <div class="file-manager-group-info flex-fill">
+                                    <a href="{% url 'group' group.id %}" class="file-manager-group-title">{{ group.name }}</a>
+                                        <span class="file-manager-group-about">{{ group.members.count }} Members</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock content %}
+    

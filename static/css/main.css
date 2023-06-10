@@ -37,6 +37,7 @@ body {
     -moz-transition: background .2s ease-in-out;
     -o-transition: background .2s ease-in-out;
     transition: background .2s ease-in-out;
+    /* scrollbar-width: thin; */
 }
 
 a {
@@ -4807,6 +4808,7 @@ body.modal-open {
     vertical-align: middle;
     display: inline-block;
     content: '';
+    scrollbar-width: thin;
 }
 
 .widget-chat .widget-chat-active-user::after {
@@ -4827,6 +4829,7 @@ body.modal-open {
     display: flex;
     flex-direction: column-reverse;
     overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .widget-chat .widget-chat-messages-container .widget-chat-message-item {
@@ -6161,6 +6164,7 @@ span.flatpickr-weekday {
     margin: 25px 25px 25px 0;
     height: calc(100% - 50px);
     overflow-y: auto;
+    scrollbar-width: none;
 }
 
 @media (max-width: 1199px) {

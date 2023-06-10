@@ -1,0 +1,111 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="mt-3">
+    <div class="section-description d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center">
+    <i class="material-icons me-3 text-warning">
+        people_outline
+    </i> 
+<h1>{{ file.filename }}</h1>
+</div>
+<a href="javascript:history.go(-1)" class="d-flex align-items-center text-decoration-none">
+    <i class="material-icons text-primary me-2">
+        keyboard_backspace
+    </i>
+    Back
+</a>
+    </div>
+<div class="">
+    <div class="row">
+        <div class="col">
+            <div class="card todo-container">
+                <div class="row">
+                    <div class="col-xl-4 col-xxl-3">
+                        <div class="todo-menu">
+
+                            <h5 class="todo-menu-title">file info</h5>
+                            <ul class="list-unstyled todo-status-filter">
+                                <li><a href="#"><i class="material-icons-outlined text-danger">calendar_month</i>Created on {{ file.created_at|date:"d M, Y" }}</a></li>
+                                <li><a href="#"><i class="material-icons-outlined text-success">folder_copy</i>{{ groups.count }} Groups shared</a></li>
+                            </ul>
+                            
+                            <h5 class="todo-menu-title">file actions</h5>
+                            <ul class="list-unstyled todo-status-filter">
+                                <li>
+                                    <a href="" class="btn btn-success">Approve</a>
+                                </li>
+                                <li>
+                                    <a href="" class="btn btn-primary">Download</a>
+                                </li>
+                                <li>
+                                    <a href="" class="btn btn-danger">Delete</a>
+                                </li>
+                            </ul>
+                            
+
+
+                            <h5 class="todo-menu-title">shared groups</h5>
+
+                            {% for group in groups %}
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="avatar avatar-rounded avatar-xs">
+                                        <div class="avatar-title">DK</div>
+                                    </div>
+                                    <a href="{% url 'group' group.id %}" class="text-dark text-decoration-none">{{ group.name|truncatechars:17 }}</a>
+                                </div>
+                                    <a href="{% url 'file-remove-group' file.id group.id %}" class="text-decoration-none text-danger">Remove</a>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-xxl-9">
+                        <div class="todo-list">
+<div class="row">
+    <div class="col">
+        <div class="card widget widget-chat">
+            <div class="card-header">
+                <!-- can be widget-chat-inactive-user for red dot -->
+                <h5 class="card-title widget-chat-active-user">Comments</h5>
+            </div>
+<div class="widget-chat-messages-container">
+ {% for comment in comments %}
+ <div class="widget-chat-message-item">
+    <div class="widget-chat-message-item-content">
+        David Kawogo
+        <div class="widget-chat-message-item-text">
+            {{ comment.comment }}
+        </div>
+    </div>
+</div>
+<!-- <div class="widget-chat-message-item own">
+    <div class="widget-chat-message-item-content">
+        Lightness Mamuya
+        <div class="widget-chat-message-item-text">
+            I will take my dog with me
+        </div>
+    </div>
+</div> -->
+ {% endfor %}
+    
+            </div>
+            <div class="widget-chat-compose">
+                <input class="widget-chat-compose-input" type="text" placeholder="Type..">
+                <button class="widget-chat-compose-send-btn"><i class="material-icons">arrow_forward_ios</i></button>
+            </div>
+        </div>
+    </div>
+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}
+    

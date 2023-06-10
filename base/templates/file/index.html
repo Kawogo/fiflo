@@ -1,0 +1,67 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="mt-3">
+<div class="section-description d-flex align-items-center justify-content-between">
+<div class="d-flex align-items-center">
+    <i class="material-icons me-3">
+        people_outline
+    </i> 
+    <h1>Files</h1>
+</div>
+<a href="{% url 'upload-file' %}" class="btn btn-primary"><i class="material-icons">add</i>Upload file</a>
+</div>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div class="col-md-8 float-end d-flex justify-content-between">
+                        <form action="{% url 'user-group' %}" method="get" class="row row-cols-lg-auto g-2 align-items-center">
+                            <div class="col-12">
+                                <input type="text" name="group-name-search" id="" placeholder="Search file by name....." class="form-control">
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        
+        <div class="row">
+            
+            {% for file in files %}
+            <div class="col-xxl-6">
+                <div class="card file-manager-recent-item">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <i class="material-icons-outlined text-dark align-middle m-r-sm">description</i>
+                            <a href="{% url 'file' file.id %}" class="file-manager-recent-item-title flex-fill">{{ file.filename }}</a>
+                            <span class="p-h-sm">{{ file.file.size|filesizeformat }}</span>
+                            <span class="p-h-sm text-muted">{{ file.created_at|date:"j/n/y" }}</span>
+                            <a href="{% url 'download-file' file.id %}">
+                                <i class="material-icons-outlined text-primary">
+                                    file_download
+                                </i>
+                            </a>
+                            <a href="{% url 'delete-file' file.id %}">
+                                <i class="material-icons-outlined text-danger">
+                                    delete
+                                </i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+                
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+{% endblock content %}
+    

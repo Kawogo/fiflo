@@ -24,7 +24,7 @@ def register_user(request):
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user_group = Group.objects.get(id = request.POST.get('group'))
+            user_group = Group.objects.get(id = request.POST.get('role'))
             user.save()
             user.groups.add(user_group)
             messages.success(request, 'User has been registered successfully.')
@@ -57,7 +57,7 @@ def edit_user(request,pk):
             user_update = form.save(commit=False)
             
             if request.POST.get('group'):
-                user_group = Group.objects.get(id = request.POST.get('group'))
+                user_group = Group.objects.get(id = request.POST.get('role'))
             else:
                 user_group = user.groups.all().first().id
             user_update.save()
